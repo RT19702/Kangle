@@ -127,7 +127,33 @@
 				});
 			}
 		},
-
+		watch: {
+			"$i18n.locale": function() {
+				this.basicList = [{
+					src: '/static/images/apply/assets.png',
+					title: this.$t('mine.assets'),
+					eventName: this.navgateAssets,
+				}, {
+					src: '/static/images/apply/hire.png',
+					title: this.$t('mine.hire'),
+					eventName: this.navgateMercenary,
+				}, {
+					src: '/static/images/apply/team.png',
+					title: this.$t('mine.team'),
+					eventName: this.navgateTeam,
+				}, {
+					src: '/static/images/apply/share.png',
+					title: this.$t('mine.share'),
+					eventName: this.navgateShare,
+				}, {
+					src: '/static/images/apply/about-us.png',
+					title: this.$t('mine.about')
+				}, {
+					src: '/static/images/apply/log-out.png',
+					title: this.$t('mine.logout')
+				}]
+			}
+		}
 	}
 </script>
 

@@ -14,11 +14,15 @@
 			<view class="trading d-flex align-items-center justify-around">
 				<view class="item">
 					<view class="title">{{$t('home.transactionAmount')}}（USDT)</view>
-					<view class="number">{{order.total_usdt}}</view>
+					<view class="number">
+						<u-count-to ref="total_usdt" :startVal="0" :endVal="order.total_usdt" color="#5597f4"></u-count-to>
+					</view>
 				</view>
 				<view class="item">
 					<view class="title">{{$t('home.transactionVolume')}}（{{$t('basic.number')}})</view>
-					<view class="number">{{order.total_order}}</view>
+					<view class="number">
+						<u-count-to ref="total_order" :startVal="0" :endVal="order.total_order" color="#5597f4"></u-count-to>
+					</view>
 				</view>
 			</view>
 			<view class="articles">
@@ -38,11 +42,11 @@
 						<view class="list d-flex align-items-center" v-for="(item,index) in listData" :key="index"
 							@click="navgateDetails(item.id)">
 							<view class="img">
-								<u--image v-if="index == 0" radius=10 :showLoading="true" src="/static/images/bedding/article1.jpg"
-									width="110px" height="80px">
+								<u--image v-if="index == 0" radius=10 :showLoading="true"
+									src="/static/images/bedding/article1.jpg" width="110px" height="80px">
 								</u--image>
-								<u--image v-else-if="index == 1" radius=10 :showLoading="true" src="/static/images/bedding/article2.jpg"
-									width="110px" height="80px">
+								<u--image v-else-if="index == 1" radius=10 :showLoading="true"
+									src="/static/images/bedding/article2.jpg" width="110px" height="80px">
 								</u--image>
 								<u--image v-else radius=10 :showLoading="true" src="/static/images/bedding/article3.jpg"
 									width="110px" height="80px">
@@ -228,6 +232,10 @@
 			if (this.isLogin) {
 				this.getActivityList();
 			}
+		},
+		onShow() {
+			this.$refs.total_usdt.start();
+			this.$refs.total_order.start();
 		}
 	}
 </script>

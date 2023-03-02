@@ -71,11 +71,10 @@
 				this.params.lang == 'zh-cn' ? this.imgUrl = '/static/images/icon/cn.png' : this.imgUrl =
 					'/static/images/icon/usa.png'
 				this.$i18n.locale = this.params.lang
-				// this.columns = [[this.$t('langCol.zh'), this.$t('langCol.en')]]
 				changeLang(this.params).then((res) => {
 					if (res.code === 0) {
 						setLanguage(res.data.lang)
-						this.$forceUpdate()
+						// this.$forceUpdate()
 					}
 				}).catch(err => {
 					console.log(err);
@@ -83,7 +82,7 @@
 			},
 			getBack() {
 				this.$router.back();
-			},
+			}
 		},
 		computed: {
 			/* 钱包地址 */
@@ -96,8 +95,12 @@
 					.length);
 			},
 		},
-		mounted() {
-
+		watch: {
+			"$i18n.locale": function() {
+				this.columns = [
+					[this.$t('langCol.zh'), this.$t('langCol.en')]
+				]
+			}
 		}
 	}
 </script>
