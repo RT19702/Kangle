@@ -68,13 +68,18 @@
 				} else {
 					e.value[0] == "中文" ? this.params.lang = 'zh-cn' : this.params.lang = 'en-us'
 				}
-				this.params.lang == 'zh-cn' ? this.imgUrl = '/static/images/icon/cn.png' : this.imgUrl =
-					'/static/images/icon/usa.png'
-				this.$i18n.locale = this.params.lang
+
+				if (this.params.lang == 'zh-cn') {
+					this.imgUrl = '/static/images/icon/cn.png'
+					this.$i18n.locale = 'zh'
+				} else {
+					this.imgUrl = '/static/images/icon/usa.png'
+					this.$i18n.locale = 'en'
+				}
+
 				changeLang(this.params).then((res) => {
 					if (res.code === 0) {
-						setLanguage(res.data.lang)
-						// this.$forceUpdate()
+						setLanguage(this.$i18n.locale)
 					}
 				}).catch(err => {
 					console.log(err);
@@ -93,7 +98,7 @@
 			_defaultAccount() {
 				return this.defaultAccount.substr(0, 6) + '*****' + this.defaultAccount.substr(-5, this.defaultAccount
 					.length);
-			},
+			}
 		},
 		watch: {
 			"$i18n.locale": function() {
@@ -101,6 +106,9 @@
 					[this.$t('langCol.zh'), this.$t('langCol.en')]
 				]
 			}
+		},
+		onShow() {
+			console.log(this.$i18n.locale, "$i18n.locale");
 		}
 	}
 </script>

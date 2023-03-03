@@ -30,6 +30,12 @@
 					color="linear-gradient(315deg, #234ADB 0%, #4269FA 100%)" @click="employBy"></u-button>
 			</view>
 		</view>
+		<u-modal :show="show" :title="$t('hire.employTips')" @confirm="confirmEmploy" @cancel="show = false"
+			:confirmText="$t('basic.confirm')" :cancelText="$t('basic.cancel')" :showCancelButton="true">
+			<slot>
+				{{$t('hire.tips')}}
+			</slot>
+		</u-modal>
 		<!-- <u-picker :show="show" :columns="columns" @cancel='show = false' @confirm="getCurrentDate"></u-picker> -->
 	</view>
 </template>
@@ -49,20 +55,28 @@
 				},
 				params: {
 					amount: null
-				}
+				},
+				show: false
 			}
 		},
 		methods: {
 			employBy() {
 				if (this.params.amount) {
-					employByBalance(this.params).then(res => {
-						uni.$showToast(res.msg);
-					}).catch(err => {
-						console.log(err);
-					})
+					this.show = true
 				} else {
 					uni.$showToast(this.$t('basic.fillInMsg'));
 				}
+			},
+			confirmEmploy() {
+				employByBalance(this.params).then(res => {
+					this.params.amount = null
+					uni.$showToast(res.msg);
+					if (res.code === 0) {
+						this.show = false
+					}
+				}).catch(err => {
+					console.log(err);
+				})
 			},
 			// 获取配置
 			getconfig() {

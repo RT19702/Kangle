@@ -27,13 +27,17 @@ export default {
 		submit: '提交',
 		noMore: '没有更多了',
 		dealing: '交易中',
-		number:'数'
+		number: '数',
+		cancel:'取消',
+		confirm:"确定"
 	},
 	home: {
 		title: '顶尖财富',
 		sectionTitle: '新闻资讯',
-		transactionVolume:'累计交易量',
-		transactionAmount:'累计交易额',
+		todayVolume: '日交易次数',
+		transactionVolume: '累计交易次数',
+		todayAmount: '日交易量',
+		transactionAmount: '累计交易量',
 	},
 	hire: {
 		title: '租聘',
@@ -41,7 +45,9 @@ export default {
 		placeholderTwo: '提款类型',
 		placeholderThree: '付款数量',
 		placeholderFour: '可用余额',
-		submit: '提交'
+		submit: '提交',
+		tips:'是否确认租聘',
+		employTips:'租聘提示'
 	},
 	mine: {
 		title: '我的',
@@ -71,10 +77,12 @@ export default {
 	mercenary: {
 		title: '雇佣列表',
 		employment: '雇佣',
-		employmentDays: '雇佣天数',
+		employmentDays: '锁仓天数',
 		employmentAmount: '雇佣金额',
 		underway: '进行中',
-		dismissal: '解雇'
+		dismissal: '解雇',
+		dismissalTips: '解雇提示',
+		tips: '是否确认解雇'
 	},
 	property: {
 		title: '我的资产',

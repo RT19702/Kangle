@@ -27,14 +27,18 @@ export default {
 		submit: 'Submit',
 		noMore: 'No More',
 		dealing: 'dealing',
-		number:'number'
+		number: 'number',
+		cancel: 'cancel',
+		confirm: "confirm"
 	},
 	// 首页
 	home: {
 		title: 'TOP WEALTH',
 		sectionTitle: 'News Information',
-		transactionVolume:'Cumulative transaction volume',
-		transactionAmount:'Cumulative transaction amount',
+		todayVolume: 'Daily transaction volume',
+		transactionVolume: 'Cumulative transaction volume',
+		todayAmount: 'Daily transaction amount',
+		transactionAmount: 'Cumulative transaction amount',
 	},
 	// 雇佣
 	hire: {
@@ -43,7 +47,9 @@ export default {
 		placeholderTwo: 'Type of withdrawal',
 		placeholderThree: 'Payment quantity',
 		placeholderFour: 'Available balance',
-		submit: 'Submit'
+		submit: 'Submit',
+		tips:'Whether to confirm the hire',
+		employTips:'Tenancy advice'
 	},
 	// 我的应用
 	mine: {
@@ -77,10 +83,12 @@ export default {
 	mercenary: {
 		title: 'Employment List',
 		employment: 'Employment',
-		employmentDays: 'days',
+		employmentDays: 'locked days',
 		employmentAmount: 'money',
 		underway: 'underway',
 		dismissal: 'dismissal',
+		dismissalTips: 'Notice of dismissal',
+		tips: 'Confirm or deny dismissal'
 		// days:'number of days'
 	},
 	// 资产页面

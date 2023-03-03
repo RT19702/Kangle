@@ -18,8 +18,24 @@ function hideLoading() {
 	uni.hideLoading()
 }
 
+// URL参数转成对象
+function queryString(str) {
+	let params = str.split('?')[1]; //截取?号后的字符串即name=itclanCoder&study=css
+	let param = params.split('&'); // 通过&符号进行分割即["name=itclanCoder", "study=css"]
+	let obj = {}; // 用一个对象存储目标值
+	for (let i = 0; i < param.length; i++) {
+		// 循环遍历截取出来的param数组
+		let paramsA = param[i].split('='); // 通过split,=继续对数组params每一项进行分割,生成数组["name", "itclanCoder"]
+		let key = paramsA[0]; // 取数组项["name", "itclanCoder"]中第0位,即name
+		let value = paramsA[1]; // 取数组项["name", "itclanCoder"]中第1位,即itclanCoder
+		obj[key] = value;
+	}
+	return obj;
+}
+
 export {
 	showToast,
 	showLoading,
-	hideLoading
+	hideLoading,
+	queryString
 }

@@ -13,15 +13,31 @@
 			</view>
 			<view class="trading d-flex align-items-center justify-around">
 				<view class="item">
-					<view class="title">{{$t('home.transactionAmount')}}（USDT)</view>
+					<view class="title">{{$t('home.todayAmount')}}</view>
 					<view class="number">
-						<u-count-to ref="total_usdt" :startVal="0" :endVal="order.total_usdt" color="#5597f4"></u-count-to>
+						<u-count-to ref="today_usdt" :startVal="0" :endVal="order.today_usdt" color="#5597f4">
+						</u-count-to>
 					</view>
 				</view>
 				<view class="item">
-					<view class="title">{{$t('home.transactionVolume')}}（{{$t('basic.number')}})</view>
+					<view class="title">{{$t('home.todayVolume')}}</view>
 					<view class="number">
-						<u-count-to ref="total_order" :startVal="0" :endVal="order.total_order" color="#5597f4"></u-count-to>
+						<u-count-to ref="today_order" :startVal="0" :endVal="order.today_order" color="#5597f4">
+						</u-count-to>
+					</view>
+				</view>
+				<view class="item">
+					<view class="title">{{$t('home.transactionAmount')}}</view>
+					<view class="number">
+						<u-count-to ref="total_usdt" :startVal="0" :endVal="order.total_usdt" color="#5597f4">
+						</u-count-to>
+					</view>
+				</view>
+				<view class="item">
+					<view class="title">{{$t('home.transactionVolume')}}</view>
+					<view class="number">
+						<u-count-to ref="total_order" :startVal="0" :endVal="order.total_order" color="#5597f4">
+						</u-count-to>
 					</view>
 				</view>
 			</view>
@@ -96,13 +112,16 @@
 				bannerList: [],
 				order: {
 					total_order: 0,
-					total_usdt: 0
+					total_usdt: 0,
+					today_order: 0,
+					today_usdt: 0,
 				},
 				params: {
 					page: 1
 				},
 				listData: [],
-				isLogin: false
+				isLogin: false,
+				invitationCode: ''
 			}
 		},
 		methods: {
@@ -137,7 +156,11 @@
 						// that.token = res.data._token;
 						// that.getAll();
 					} else if (res.code === 404) {
-						this.hasVerification = true;
+						if (this.invitationCode) {
+							this.confirmIdentify(this.invitationCode)
+						} else {
+							this.hasVerification = true;
+						}
 					}
 				}).catch((e) => {
 					console.log(e);
@@ -203,7 +226,9 @@
 			getSum() {
 				getTransferFee().then(res => {
 					if (res.code === 0) {
+						this.order.today_usdt = res.data.today_usdt
 						this.order.total_usdt = res.data.total_usdt
+						this.order.today_order = res.data.today_order
 						this.order.total_order = res.data.total_order
 					}
 				}).catch(err => {
@@ -228,14 +253,27 @@
 		mounted() {
 			this.getData();
 		},
-		onLoad() {
-			if (this.isLogin) {
-				this.getActivityList();
+		onLoad(option) {
+			if (window.location.search) {
+				// 获取页面URL参数中的代码
+				const urlParams = new URLSearchParams(window.location.search);
+				const code = urlParams.get('code');
+				// 在代码中查找数字
+				const regex = /\d+/g;
+				const numbers = code.match(regex);
+
+				this.invitationCode = numbers[0]
+				// 打印数字
+				console.log(numbers[0]);
 			}
 		},
 		onShow() {
-			this.$refs.total_usdt.start();
-			this.$refs.total_order.start();
+			this.$nextTick(() => {
+				this.$refs.total_usdt.start();
+				this.$refs.today_usdt.start();
+				this.$refs.total_order.start();
+				this.$refs.today_order.start();
+			})
 		}
 	}
 </script>
@@ -270,6 +308,7 @@
 					width: 42%;
 					background: #234ADB15;
 					padding: 30rpx 15rpx;
+					margin-bottom: 20rpx;
 
 					.title {
 						font-size: 26rpx;
