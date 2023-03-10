@@ -1,4 +1,5 @@
-function showToast(title, duration = 2000, mask = true) {
+export function showToast(title, duration = 2000, mask = true) {
+	console.log('showToast is called') // 输出调试信息
 	uni.showToast({
 		title,
 		icon: 'none',
@@ -7,19 +8,19 @@ function showToast(title, duration = 2000, mask = true) {
 	})
 }
 
-function showLoading(title = "加载中", mask = true) {
+export function showLoading(title = "加载中", mask = true) {
 	uni.showLoading({
 		title,
 		mask
 	})
 }
 
-function hideLoading() {
+export function hideLoading() {
 	uni.hideLoading()
 }
 
 // URL参数转成对象
-function queryString(str) {
+export function queryString(str) {
 	let params = str.split('?')[1]; //截取?号后的字符串即name=itclanCoder&study=css
 	let param = params.split('&'); // 通过&符号进行分割即["name=itclanCoder", "study=css"]
 	let obj = {}; // 用一个对象存储目标值
@@ -33,9 +34,9 @@ function queryString(str) {
 	return obj;
 }
 
-export {
-	showToast,
-	showLoading,
-	hideLoading,
-	queryString
-}
+// export {
+// 	showToast,
+// 	showLoading,
+// 	hideLoading,
+// 	queryString
+// }

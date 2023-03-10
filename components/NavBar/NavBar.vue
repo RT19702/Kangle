@@ -14,10 +14,12 @@
 				{{_defaultAccount}}
 			</view>
 			<view class="language d-flex align-items-center justify-center" @click="show = true">
-				<image class="img" :src="imgUrl" mode="widthFix"></image>
+				<image class="img"
+					:src="language == 'zh' || language == 'zh-cn' ? '/static/images/icon/cn.png' : '/static/images/icon/usa.png'"
+					mode="widthFix"></image>
 				<!-- <u--image class="img" :showLoading="true" :src="imgUrl" width="34rpx" height="34rpx"></u--image> -->
 				<view class="title">
-					{{params.lang == 'zh-cn' ? '中文' : 'en-us'}}
+					{{language == 'zh' || language == "zh-cn" ? "中文" : "en-us"}}
 				</view>
 			</view>
 		</view>
@@ -53,33 +55,30 @@
 				columns: [
 					[this.$t('langCol.zh'), this.$t('langCol.en')]
 				],
-				params: {
-					lang: getLanguage() || "en-us"
-				},
-				imgUrl: getLanguage() == "zh-cn" ? '/static/images/icon/cn.png' : '/static/images/icon/usa.png'
+				// imgUrl: getLanguage() == "zh" ? '/static/images/icon/cn.png' : '/static/images/icon/usa.png',
 			};
 		},
 		methods: {
 			getCurrentVal(e) {
 				this.show = false;
 				let matching = /[a-zA-Z]+/g; // 匹配多个英文字母
-				if (matching.test(e.value[0])) {
-					this.params.lang = e.value[0]
-				} else {
-					e.value[0] == "中文" ? this.params.lang = 'zh-cn' : this.params.lang = 'en-us'
-				}
-
-				if (this.params.lang == 'zh-cn') {
-					this.imgUrl = '/static/images/icon/cn.png'
+				let params = {}
+				let language = ''
+				e.value[0] == "中文" || e.value[0] == "zh-cn" ? language = 'zh-cn' : language = 'en-us'
+				this.$store.commit('app/setLang', language);
+				if (this.language == 'zh-cn') {
+					// this.imgUrl = '/static/images/icon/cn.png'
 					this.$i18n.locale = 'zh'
 				} else {
-					this.imgUrl = '/static/images/icon/usa.png'
+					// this.imgUrl = '/static/images/icon/usa.png'
 					this.$i18n.locale = 'en'
 				}
-
-				changeLang(this.params).then((res) => {
+				changeLang({
+					lang: language
+				}).then((res) => {
 					if (res.code === 0) {
 						setLanguage(this.$i18n.locale)
+						this.$emit('switchLang')
 					}
 				}).catch(err => {
 					console.log(err);
@@ -93,6 +92,7 @@
 			/* 钱包地址 */
 			...mapState({
 				defaultAccount: (state) => state.web3.defaultAccount,
+				language: (state) => state.app.language,
 			}),
 			/* 钱包地址 带* */
 			_defaultAccount() {

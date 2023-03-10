@@ -34,6 +34,12 @@
 				</u-button>
 			</view>
 		</view>
+		<u-modal :show="show" :title="$t('transaction.employTips')" @confirm="confirmEmploy" @cancel="show = false"
+			:confirmText="$t('basic.confirm')" :cancelText="$t('basic.cancel')" :showCancelButton="true">
+			<slot>
+				{{$t('transaction.tips')}}
+			</slot>
+		</u-modal>
 	</view>
 </template>
 
@@ -56,6 +62,7 @@
 				params: {
 					amount: '',
 				},
+				show:false
 				// order: {
 				// 	order_sn: null,
 				// 	amount: null
@@ -113,7 +120,11 @@
 			},
 			// 提币
 			withdraw() {
+				this.show = true
+			},
+			confirmEmploy(){
 				withdrawal(this.params).then(res => {
+					this.show = false
 					uni.$showToast(res.msg)
 				}).catch(err => {
 					console.log(err);

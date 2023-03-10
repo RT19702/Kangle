@@ -34,10 +34,10 @@ export default {
 	home: {
 		title: '顶尖财富',
 		sectionTitle: '新闻资讯',
-		todayVolume: '日交易次数',
-		transactionVolume: '累计交易次数',
-		todayAmount: '日交易量',
-		transactionAmount: '累计交易量',
+		todayVolume: '今日交易次数 (单)',
+		transactionVolume: '累计交易次数 (单)',
+		todayAmount: '今日交易量 ($)',
+		transactionAmount: '累计交易量 ($)',
 	},
 	hire: {
 		title: '租聘',
@@ -95,6 +95,8 @@ export default {
 		withdrawalType: "提现类型",
 		withdrawBalance: "提现余额",
 		rechargeAmount: '充值金额',
+		tips:'是否确认提现',
+		employTips:'提现'
 	},
 	// 资讯页面
 	information: {

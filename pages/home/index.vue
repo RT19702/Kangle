@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<NavBar :title="$t('home.title')" :showSite="true"></NavBar>
+		<NavBar :title="$t('home.title')" :showSite="true" @switchLang="switchLang"></NavBar>
 		<view class="section">
 			<view class="swiper-images">
 				<swiper class="swiper">
@@ -15,29 +15,41 @@
 				<view class="item">
 					<view class="title">{{$t('home.todayAmount')}}</view>
 					<view class="number">
-						<u-count-to ref="today_usdt" :startVal="0" :endVal="order.today_usdt" color="#5597f4">
+						<u-count-to ref="today_usdt" :startVal="0" :endVal="order.today_usdt" color="#5597f4"
+							fontSize="18px">
 						</u-count-to>
+						<u--image :showLoading="true" src="/static/images/bedding/curve.png" width="100%" height="27px"
+							mode="widthFix"></u--image>
 					</view>
 				</view>
 				<view class="item">
 					<view class="title">{{$t('home.todayVolume')}}</view>
 					<view class="number">
-						<u-count-to ref="today_order" :startVal="0" :endVal="order.today_order" color="#5597f4">
+						<u-count-to ref="today_order" :startVal="0" :endVal="order.today_order" color="#5597f4"
+							fontSize="18px">
 						</u-count-to>
+						<u--image :showLoading="true" src="/static/images/bedding/curve.png" width="100%" height="27px"
+							mode="widthFix"></u--image>
 					</view>
 				</view>
 				<view class="item">
 					<view class="title">{{$t('home.transactionAmount')}}</view>
 					<view class="number">
-						<u-count-to ref="total_usdt" :startVal="0" :endVal="order.total_usdt" color="#5597f4">
+						<u-count-to ref="total_usdt" :startVal="0" :endVal="order.total_usdt" color="#5597f4"
+							fontSize="18px">
 						</u-count-to>
+						<u--image :showLoading="true" src="/static/images/bedding/curve.png" width="100%" height="27px"
+							mode="widthFix"></u--image>
 					</view>
 				</view>
 				<view class="item">
 					<view class="title">{{$t('home.transactionVolume')}}</view>
 					<view class="number">
-						<u-count-to ref="total_order" :startVal="0" :endVal="order.total_order" color="#5597f4">
+						<u-count-to ref="total_order" :startVal="0" :endVal="order.total_order" color="#5597f4"
+							fontSize="18px">
 						</u-count-to>
+						<u--image :showLoading="true" src="/static/images/bedding/curve.png" width="100%" height="27px"
+							mode="widthFix"></u--image>
 					</view>
 				</view>
 			</view>
@@ -99,7 +111,8 @@
 		getTransferFee //获取累计交易额
 	} from "@/common/api.js"
 	import {
-		mapState
+		mapState,
+		mapMutations
 	} from "vuex"; // 导入Vuex获取钱包地址
 	import {
 		setToken
@@ -120,11 +133,12 @@
 					page: 1
 				},
 				listData: [],
-				isLogin: false,
+				// isLogin: false,
 				invitationCode: ''
 			}
 		},
 		methods: {
+			...mapMutations('app', ['setLogin']),
 			// 获取钱包地址
 			async getData() {
 				if (window.ethereum) {
@@ -152,7 +166,8 @@
 						this.getTopBanner(); // 获取顶部轮播图
 						this.getActivityList(); // 获取活动列表
 						this.getSum();
-						this.isLogin = true; // 判断已经登录成功
+						this.setLogin();
+						// this.isLogin = true; // 判断已经登录成功
 						// that.token = res.data._token;
 						// that.getAll();
 					} else if (res.code === 404) {
@@ -180,7 +195,8 @@
 						this.getTopBanner(); // 获取顶部轮播图
 						this.getActivityList(); // 获取活动列表
 						this.getSum();
-						this.isLogin = true; // 判断已经登录成功
+						this.setLogin();
+						// this.isLogin = true; // 判断已经登录成功
 						// that.getAll();
 					} else {
 						uni.$showToast(res.msg)
@@ -238,6 +254,11 @@
 			scrolltolower() {
 				this.getActivityList()
 			},
+			switchLang(){
+				this.params.page = 1
+				this.listData = []
+				this.getActivityList()
+			},
 			navgateDetails(id) {
 				uni.navigateTo({
 					url: '/pages_basic/information/information?id=' + id
@@ -248,12 +269,19 @@
 			/* 钱包地址 */
 			...mapState({
 				defaultAccount: (state) => state.web3.defaultAccount,
+				isLogin: (state) => state.app.isLogin,
 			})
 		},
 		mounted() {
+			// if (this.isLogin) {
+			// 	this.checkLogin()
+			// } else {
+			// 	this.getData();
+			// }
 			this.getData();
+			console.log("isLogin: " + this.isLogin);
 		},
-		onLoad(option) {
+		onLoad() {
 			if (window.location.search) {
 				// 获取页面URL参数中的代码
 				const urlParams = new URLSearchParams(window.location.search);
@@ -268,13 +296,25 @@
 			}
 		},
 		onShow() {
+			if (this.isLogin) {
+				this.params.page = 1
+				this.listData = []
+				this.getActivityList()
+			}
 			this.$nextTick(() => {
 				this.$refs.total_usdt.start();
 				this.$refs.today_usdt.start();
 				this.$refs.total_order.start();
 				this.$refs.today_order.start();
 			})
-		}
+		},
+		// watch: {
+		// 	"$i18n.locale": function() {
+		// 		this.params.page = 1
+		// 		this.listData = []
+		// 		this.getActivityList()
+		// 	}
+		// }
 	}
 </script>
 
@@ -304,20 +344,20 @@
 				margin: 40rpx 0;
 
 				.item {
-					border-radius: 6px 6px 6px 6px;
+					border-radius: 2px 2px 2px 2px;
 					width: 42%;
-					background: #234ADB15;
 					padding: 30rpx 15rpx;
-					margin-bottom: 20rpx;
+					margin-bottom: 40rpx;
+					box-shadow: 0px 1px 11px 1px rgba(0, 0, 0, 0.2);
 
 					.title {
 						font-size: 26rpx;
-						color: #5A5A5A;
+						color: #BDBDBD;
 					}
 
 					.number {
-						color: #5597f4;
-						font-size: 35rpx;
+						color: $theme-color;
+						font-size: 30rpx;
 					}
 				}
 			}

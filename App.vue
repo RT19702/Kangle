@@ -21,8 +21,9 @@
 			uni.$showLoading = showLoading;
 			uni.$hideLoading = hideLoading;
 		},
-		onShow: function() {},
-		onHide: function() {},
+		onShow: function() {
+		},
+		onHide: function() {}
 	}
 </script>
 

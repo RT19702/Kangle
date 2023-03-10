@@ -1,10 +1,11 @@
-import store from '@/store/index.js'; // 导入vuex
 // import Fn from '@/common/public.js'; // 导入工具
-let server_url = ''; // 服务器地址
+let server_url = 'http://www.topfortune.net'; // 服务器地址
+// let server_url = 'http://kangle.weiyinstudio.com'; // 服务器地址
+
 let token = '';	// 用户token
 
 function service(options = {}) {
-	server_url = store.state.baseUrl; // 从vuex中获取网络请求地址
+	// server_url = store.state.baseUrl; // 从vuex中获取网络请求地址
 	// store.state.token && (token = store.state.token); // 从vuex中获取登录凭证
 	// #ifdef H5
 	// token = localStorage.getItem('token'); // 从storage中获取token - 只在H5中

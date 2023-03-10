@@ -91,10 +91,11 @@
 				}, {
 					src: '/static/images/apply/about-us.png',
 					title: this.$t('mine.about')
-				}, {
-					src: '/static/images/apply/log-out.png',
-					title: this.$t('mine.logout')
 				}]
+				// , {
+				// 	src: '/static/images/apply/log-out.png',
+				// 	title: this.$t('mine.logout')
+				// }
 			}
 		},
 		methods: {
@@ -148,11 +149,15 @@
 				}, {
 					src: '/static/images/apply/about-us.png',
 					title: this.$t('mine.about')
-				}, {
-					src: '/static/images/apply/log-out.png',
-					title: this.$t('mine.logout')
 				}]
+				// , {
+				// 	src: '/static/images/apply/log-out.png',
+				// 	title: this.$t('mine.logout')
+				// }
 			}
+		},
+		mounted() {
+			
 		}
 	}
 </script>

@@ -5,6 +5,15 @@ import i18n from '@/lang/index.js'
 import store from './store';
 Vue.use(uView)
 
+// import {
+// 	showToast,
+// 	showLoading,
+// 	hideLoading
+// } from "@/utils/index.js"
+// Vue.prototype.$showToast = showToast
+// Vue.prototype.$showLoading = showLoading
+// Vue.prototype.$hideLoading = hideLoading
+
 // #ifndef VUE3
 import Vue from 'vue'
 Vue.config.productionTip = false

@@ -1,12 +1,11 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import web3 from './modules/web3.js'
+import app from './modules/app.js'
 Vue.use(Vuex);
 const store = new Vuex.Store({
 	state: {
-		token: '', // 用户token
-		baseUrl: 'http://kangle.weiyinstudio.com', // 测试服域名
-		// baseUrl: '', // 正式服域名
+		
 	},
 	mutations: {
 
@@ -15,7 +14,8 @@ const store = new Vuex.Store({
 
 	},
 	modules: {
-		web3
+		web3,
+		app
 	}
 });
 

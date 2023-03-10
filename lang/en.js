@@ -37,8 +37,8 @@ export default {
 		sectionTitle: 'News Information',
 		todayVolume: 'Daily transaction volume',
 		transactionVolume: 'Cumulative transaction volume',
-		todayAmount: 'Daily transaction amount',
-		transactionAmount: 'Cumulative transaction amount',
+		todayAmount: 'Daily transaction amount ($)',
+		transactionAmount: 'Cumulative transaction amount ($)',
 	},
 	// 雇佣
 	hire: {
@@ -103,7 +103,9 @@ export default {
 		walletAddress: 'Wallet Address',
 		withdrawalType: "Type of withdrawal",
 		withdrawBalance: "Balance of withdrawal",
-		rechargeAmount: 'recharge amount'
+		rechargeAmount: 'recharge amount',
+		tips:'Whether to confirm withdrawal',
+		employTips:'withdraw deposit'
 	},
 	// 资讯页面
 	information: {
